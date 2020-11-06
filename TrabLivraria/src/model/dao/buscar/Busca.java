@@ -8,11 +8,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.mysql.jdbc.Statement;
+//import com.mysql.jdbc.Statement;
 
 import entities.Author;
 import entities.BooksAuthors;
 import entities.Book;
+import entities.BooksANDAuthors;
 import entities.Publisher;
 import model.dao.DaoBusca;
 
@@ -21,7 +22,7 @@ import model.dao.DaoBusca;
 public class Busca implements DaoBusca{
 	
 	private static final String USER = "root";
-    private static final String PASS = "";
+    private static final String PASS = "Br@sil2020";
     private static final String URL = "jdbc:mysql://localhost:3306/Livraria?autoReconnect=true&useSSL=false";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     
@@ -130,8 +131,8 @@ public class Busca implements DaoBusca{
 	}
 
 	@Override
-	public ArrayList<BooksAuthors> buscaAutorLivro(String titulo, String nomeAutor) {
-		ArrayList<BooksAuthors> autorLivros = new ArrayList<>();
+	public ArrayList<BooksANDAuthors> buscaAutorANDLivro(String titulo, String nomeAutor) {
+		ArrayList<BooksANDAuthors> autorLivros = new ArrayList<>();
 
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
 			
@@ -148,7 +149,11 @@ public class Busca implements DaoBusca{
 				String isbn = rs.getString("isbn");
 				String nome=  rs.getString("name");				      
 				
+<<<<<<< HEAD
 				BooksAuthors autorLivro = new BooksAuthors("", 0, 0);
+=======
+				BooksANDAuthors autorLivro = new BooksANDAuthors(tituloLivro, isbn, nome);
+>>>>>>> cfd50280d1035bff57b3bc25f7c3fbfaa96a43ca
 				autorLivros.add(autorLivro);
 			}
 			

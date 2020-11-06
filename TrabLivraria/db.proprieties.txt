@@ -1,0 +1,4 @@
+USER="root"
+PASSWORD="Br@sil2020"
+URL="jdbc:mysql://localhost:3306/Livraria?autoReconnect=true&useSSL=false"
+DRIVER = "com.mysql.jdbc.Driver";
