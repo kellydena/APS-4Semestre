@@ -27,5 +27,7 @@ public interface ViewInclui {
 	public Publisher getPublisherBook();
 	public ArrayList<Author> getAuthorsBook();
 	
+	public void disposeFrame();
+	
 
 }

@@ -9,6 +9,7 @@ import model.dao.DaoBusca;
 import view.pc.altera.ViewAltera;
 import view.pc.busca.ViewBusca;
 import view.pc.util.messages.FrameMessage2;
+import view.pc.util.messages.FrameReturnToUser;
 
 public class ControllerAltera {
 	
@@ -16,6 +17,7 @@ public class ControllerAltera {
 	private ViewAltera view;
 	private DaoBusca daoBusca;
 	private DaoAlterar daoAltera;
+	
 	
 	public ControllerAltera(ViewAltera viewAltera, DaoBusca daoBusca,DaoAlterar daoAltera) {
 		this.view = viewAltera;
@@ -48,6 +50,7 @@ public class ControllerAltera {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object tipo = view.getComboBoxSelected();
+			String msg = "";
 			if(tipo.equals("Livros")) {
 //				if(!txtISBN.getText().equals(" -   -     - ") && !txtTitulo.getText().equals("") 
 //						&& !txtBookPrice.getText().equals("  .  ")
@@ -67,17 +70,19 @@ public class ControllerAltera {
 				String nome = view.getFirstName();
 				String ultimoNome = view.getLastName();
 				
-				if(author != null || nome.equals("") || ultimoNome.equals("")) { //Caso o usuario nao tenha preenchido todos os campos
+				if(author == null || nome.equals("") || ultimoNome.equals("")) { //Caso o usuario nao tenha preenchido todos os campos
 					new FrameMessage2();
 				}else{
-					daoAltera.alterarAutor(new Author(0, nome, ultimoNome));
+					daoAltera.alterarAutor(new Author(author.getId(), ultimoNome, nome));
+					msg = "O(a) Author(a) " + author.getFname() + " " + author.getName() + "\n"
+							+ "Foi alterado para " + nome + " " + ultimoNome;
 				}
 			}
 			
-		}
-		
+		new FrameReturnToUser(msg);
+		view.disposeFrame();
 	}
-	
+	}
 	class AddSubmitBehavior implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {

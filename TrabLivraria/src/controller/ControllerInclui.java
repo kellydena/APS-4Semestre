@@ -13,6 +13,7 @@ import model.dao.DaoBusca;
 import view.pc.inclui.ViewInclui;
 import view.pc.util.messages.FrameMessage;
 import view.pc.util.messages.FrameMessage2;
+import view.pc.util.messages.FrameReturnToUser;
 
 public class ControllerInclui {
 
@@ -38,6 +39,7 @@ public class ControllerInclui {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object texto = view.getComboBoxSelected();
+			String msg = "";
 			boolean doesAlreadyExists = false;
 			if(texto.equals("Editoras")) {
 				String nome = view.getEditoraName();
@@ -52,6 +54,8 @@ public class ControllerInclui {
 					new FrameMessage("editora");
 				} else{
 					daoInclui.adicionarEditora(new Publisher(0, view.getEditoraName(), view.getUrl()));
+					msg = "A editora " + view.getEditoraName() + " com url " + view.getUrl() +"\n" 
+					+ "Foi adicionada";
 				}
 			} else if(texto.equals("Autores")) {
 				String primeiroNome = view.getFirstName();
@@ -66,6 +70,8 @@ public class ControllerInclui {
 					new FrameMessage("autor(a)");
 				} else{
 					daoInclui.adicionarAutor(new Author(0, view.getFirstName(), view.getLastName()));
+					msg = "O(a) autor(a) " + view.getFirstName() + " " + view.getLastName() +"\n" 
+					+ "Foi adicionado(a)";
 				}
 			} else if(texto.equals("Livros")) {
 				String ISBN = view.getISBN();
@@ -80,17 +86,24 @@ public class ControllerInclui {
 				if(bookName.equals("") || ISBN.equals("") || editora == null) {
 					new FrameMessage2();
 				} else if(doesAlreadyExists) {
-					new FrameMessage("autor(a)");
+					new FrameMessage("livro");
 				} else{
 					daoInclui.adicionarLivro(new Book(bookName, ISBN, editora.getId(), price));
+					msg = "O livro " + bookName + " com ISBN " + ISBN +"\n" 
+					+ "Editora " + editora.getName() + ", preco " + price + "\n"
+					+ "Autores(as): ";
 					for(int i= 0; i < autores.size(); i++) { //Adiciona quantas os autores ao livro
 						daoInclui.adicionaBookAuthor(new BooksAuthors(ISBN, autores.get(i).getId(), i+1));
+						msg = msg + "\n" + autores.get(i).getName() + " " + autores.get(i).getFname();
 					}
+					msg = msg + "\nFoi adicionado";
 				}
-				
 			}
-			
+			if(!doesAlreadyExists)
+				new FrameReturnToUser(msg);
+			view.disposeFrame();
 		}
+		
 	}
 	
 	

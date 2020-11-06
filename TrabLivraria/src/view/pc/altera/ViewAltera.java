@@ -30,5 +30,6 @@ public interface ViewAltera {
 	public Publisher getPublisherBook();
 	public ArrayList<Author> getAuthorsBook();
 	
+	public void disposeFrame();
 	
 }

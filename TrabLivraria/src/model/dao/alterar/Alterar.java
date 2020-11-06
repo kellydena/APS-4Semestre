@@ -49,7 +49,6 @@ public class Alterar implements DaoAlterar{
 			final String query = "UPDATE Authors SET name = (?), fname = (?) WHERE author_id = (?)";
 			
 			PreparedStatement pstm = con.prepareStatement(query); 
-			
 			pstm.setString(1, autor.getName());
 			pstm.setString(2, autor.getFname());
 			pstm.setInt(3, autor.getId());

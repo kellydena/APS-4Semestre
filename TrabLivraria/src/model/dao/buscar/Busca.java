@@ -148,7 +148,7 @@ public class Busca implements DaoBusca{
 				String isbn = rs.getString("isbn");
 				String nome=  rs.getString("name");				      
 				
-				BooksAuthors autorLivro = new BooksAuthors(tituloLivro, isbn, nome);
+				BooksAuthors autorLivro = new BooksAuthors("", 0, 0);
 				autorLivros.add(autorLivro);
 			}
 			

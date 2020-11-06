@@ -328,6 +328,9 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 		@Override
 		public void setAutoresEscolherApenasUm(ArrayList<Author> a) {listaAutoresAutores = a;}
 
+		@Override
+		public void disposeFrame() {dispose();}
+
 		
 	    
 		

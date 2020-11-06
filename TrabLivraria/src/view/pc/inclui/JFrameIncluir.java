@@ -281,6 +281,9 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 		@Override
 		public ArrayList<Author> getAuthorsBook() {return autoresEscolhidos;}
 
+		@Override
+		public void disposeFrame() {dispose();}
+
 		
 	    
 		
