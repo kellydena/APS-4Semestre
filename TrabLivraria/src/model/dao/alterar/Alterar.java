@@ -64,13 +64,40 @@ public class Alterar implements DaoAlterar{
 
 	@Override
 	public void alterarEditora(Publisher editora) {
-		// TODO Auto-generated method stub
-		
+		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
+			System.out.println("Conexão Feita");
+			
+			final String query = "UPDATE Publishers SET name = (?), url = (?) WHERE publisher_id = (?)";
+			
+			PreparedStatement pstm = con.prepareStatement(query); 
+			
+			pstm.setString(1, editora.getName());
+			pstm.setString(2, editora.getUrl());
+			pstm.setInt(3, editora.getId());
+			
+			pstm.executeUpdate();			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void alterarBooksAuthors(BooksAuthors ba) {
-		// TODO Auto-generated method stub
-		
+		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
+			System.out.println("Conexão Feita");
+			
+			final String query = "UPDATE BooksAuthors SET seq_no = (?) WHERE authorID_authors_fk = (?)";
+			
+			PreparedStatement pstm = con.prepareStatement(query); 
+			
+			pstm.setInt(1, ba.getSeqNo());
+			pstm.setInt(2, ba.getAuthorID());
+			
+			pstm.executeUpdate();			
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 }
