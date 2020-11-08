@@ -21,6 +21,7 @@ public interface ViewAltera {
 	public String getFirstName();
 	public String getLastName();
 	
+	public Publisher getPublisher();
 	public String getEditoraName();
 	public String getUrl();
 	

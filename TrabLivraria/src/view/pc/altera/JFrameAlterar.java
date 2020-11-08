@@ -41,15 +41,15 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 	private JButton buttonChooseAuthors;
 	private JButton buttonChoosePublishers;
 	
-	private JButton bVerificaNome;
+	private JButton bVerificaNomeAutor;
 	private ArrayList<Author> listaAutoresAutores;
 	private JTextField txtNomeAutor;
 	private JTextField txtSobrenomeAutor;
 	private Author NomeAuthorEscolhido;
 	
+	private JButton bVerificaNomeEditora;
 	private JTextField txtNomeEditora;
 	private JTextField txtUrlEditora;
-	
 	private Publisher editoraEscolhida;
 	
 	private ArrayList<Author> listaAutoresLivros;
@@ -60,11 +60,11 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 	private JButton buttonSubmit;
 	private ArrayList<Author> autoresEscolhidos;
 	
-	private JFrameListEditoras JanelalistaEditoras;
-	private JFrameListAutores JanelalistaAutores;
+	private JFrameListEditoras janelalistaEditorasParaLivro;
+	private JFrameListAutores janelalistaAutores;
 	
 	private ArrayList<Author> listaAutoresAutor;
-	private JFrameListEditoras JanelalistaEditorasEditora;
+	private JFrameListEditoras janelalistaEditorasEditora;
 	private JFrameListSomenteUmAutor JanelalistaAutoresAutor;
 	
 	public JFrameAlterar() {
@@ -100,20 +100,20 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 		        cb.addItemListener(this);
 		        comboBoxPane.add(cb);
 		        
-		        //Create the "cards".
+/*----------------------------------------AUTORES----------------------------------------------------------------------*/
 		        JPanel card1 = new JPanel();
 		        card1.setLayout(new FlowLayout(FlowLayout.TRAILING));
 		        
 		        card1.add(new JLabel("Autor(a) a ser alterado(a): ", JLabel.TRAILING));
-		        bVerificaNome = new JButton("Escolher autor(a)");
-		        bVerificaNome.addActionListener(new ActionListener() {				
+		        bVerificaNomeAutor = new JButton("Escolher autor(a)");
+		        bVerificaNomeAutor.addActionListener(new ActionListener() {				
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JanelalistaAutoresAutor = new JFrameListSomenteUmAutor(listaAutoresAutores);
 						JanelalistaAutoresAutor.addEscolheAutor(new EscolherAutoresAutor());
 					}
 				});
-		        card1.add(bVerificaNome);
+		        card1.add(bVerificaNomeAutor);
 		     
 	            card1.add(new JLabel("           Novo nome: ", JLabel.TRAILING));
 	            txtNomeAutor = new JTextField(20);
@@ -123,7 +123,7 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 		        txtSobrenomeAutor = new JTextField(20);
 		        card1.add(txtSobrenomeAutor);
 		        
-		        
+/*----------------------------------------LIVROS----------------------------------------------------------------------*/		        
 		        JPanel card2 = new JPanel();
 		        card2.setLayout(new GridLayout(5,2));
 		        txtISBN = new JFormattedTextField(createFormatter("#-###-#####-#"));
@@ -151,8 +151,8 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {						
-						JanelalistaAutores = new JFrameListAutores(listaAutoresLivros);
-						JanelalistaAutores.addEscolheAutores(new EscolherAutores());
+						janelalistaAutores = new JFrameListAutores(listaAutoresLivros);
+						janelalistaAutores.addEscolheAutores(new EscolherAutores());
 					}
 				});
 	            card2.add(buttonChooseAuthors);
@@ -163,16 +163,26 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						JanelalistaEditoras = new JFrameListEditoras(listaEditorasEditoras);
-						JanelalistaEditoras.addEscolheEditora(new EscolherEditora());
+						janelalistaEditorasParaLivro = new JFrameListEditoras(listaEditorasEditoras);
+						janelalistaEditorasParaLivro.addEscolheEditora(new EscolherEditora());
 						
 					}
 				});
 	            card2.add(buttonChoosePublishers); 
 
-		        
+/*----------------------------------------EDITORAS----------------------------------------------------------------------*/
 		        JPanel card3 = new JPanel();
 		        card3.setLayout(new FlowLayout(FlowLayout.TRAILING));
+		        bVerificaNomeEditora = new JButton("Escolher editora");
+		        bVerificaNomeEditora.addActionListener(new ActionListener() {				
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						janelalistaEditorasEditora = new JFrameListEditoras(listaEditorasEditoras);
+						janelalistaEditorasEditora.addEscolheEditora(new EscolherEditora());
+					}
+				});
+		        card3.add(new JLabel("Escolha a editora a ser alterada: ", JLabel.TRAILING));
+		        card3.add(bVerificaNomeEditora);
 		        
 		        txtNomeEditora = new JTextField(20);
 		        card3.add(new JLabel("Nome da Editora: ", JLabel.TRAILING));
@@ -239,17 +249,26 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				editoraEscolhida = JanelalistaEditoras.getEditora();
-				buttonChoosePublishers.setEnabled(false);
+				editoraEscolhida = janelalistaEditorasEditora.getEditora();
+				bVerificaNomeEditora.setEnabled(false);
 			}
 			
+		}
+		
+		class EscolherEditoraParaLivro implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				editoraEscolhida = janelalistaEditorasParaLivro.getEditora();
+				buttonChoosePublishers.setEnabled(false);
+			}
 		}
 		
 		class EscolherAutores implements ActionListener{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				autoresEscolhidos = JanelalistaAutores.getAutores();
+				autoresEscolhidos = janelalistaAutores.getAutores();
 				buttonChooseAuthors.setEnabled(false);
 			}
 		}
@@ -259,7 +278,7 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				NomeAuthorEscolhido = JanelalistaAutoresAutor.getAutor();
-				bVerificaNome.setEnabled(false);
+				bVerificaNomeAutor.setEnabled(false);
 			}
 		}
 		
@@ -326,10 +345,14 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 		public Author getAuthor() {return NomeAuthorEscolhido;}
 
 		@Override
+		public Publisher getPublisher() {return editoraEscolhida;}
+		
+		@Override
 		public void setAutoresEscolherApenasUm(ArrayList<Author> a) {listaAutoresAutores = a;}
 
 		@Override
 		public void disposeFrame() {dispose();}
+
 
 		
 	    

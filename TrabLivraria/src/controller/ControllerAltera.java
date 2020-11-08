@@ -4,10 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import entities.Author;
+import entities.Publisher;
 import model.dao.DaoAlterar;
 import model.dao.DaoBusca;
 import view.pc.altera.ViewAltera;
-import view.pc.busca.ViewBusca;
 import view.pc.util.messages.FrameMessage2;
 import view.pc.util.messages.FrameReturnToUser;
 
@@ -30,6 +30,7 @@ public class ControllerAltera {
 		view.addSubmitBehavior(new submitBehavior());
 		view.addVerificaNomeBehavior(new VerificaNomeAuthor());
 		view.setAutoresEscolherApenasUm(daoBusca.buscaAutor("", ""));
+		view.setEditoras(daoBusca.buscaEditora(""));
 	}
 
 	class VerificaNomeAuthor implements ActionListener{
@@ -76,6 +77,17 @@ public class ControllerAltera {
 					daoAltera.alterarAutor(new Author(author.getId(), ultimoNome, nome));
 					msg = "O(a) Author(a) " + author.getFname() + " " + author.getName() + "\n"
 							+ "Foi alterado para " + nome + " " + ultimoNome;
+				}
+			} else if(tipo.equals("Editoras")) {
+				Publisher editora = view.getPublisher();
+				String nome = view.getEditoraName();
+				String url = view.getUrl();
+				if(editora == null || nome.equals("") || url.equals("")) {
+					new FrameMessage2();
+				} else {
+					daoAltera.alterarEditora(new Publisher(editora.getId(), nome, url));
+					msg = "A editora " + editora.getName() + " com url " + editora.getUrl() + "\n"
+							+ "Foi alterada para " + nome + " com url " + url;
 				}
 			}
 			
