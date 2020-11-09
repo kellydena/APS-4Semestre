@@ -70,6 +70,32 @@ public class Busca implements DaoBusca{
 		}  
 		return livros;
 	}
+	
+	@Override
+	public Book buscaLivroPorISBN(String isbn) {
+		Book livro = null;
+		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
+			
+			final String query = "SELECT * FROM Books WHERE isbn = (?)";
+			
+			PreparedStatement pstm = con.prepareStatement(query); 
+			
+			pstm.setString(1,isbn);
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()) {
+				String titulo = rs.getString("title");
+				String isbnLivro = rs.getString("isbn"); 
+				int editoraIdFk = rs.getInt("publisher_id");
+        	    double preco = rs.getDouble("price");			      
+        	    
+        	    livro = new Book(titulo, isbnLivro, editoraIdFk, preco);
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}  
+		return livro;
+	}
 
 	@Override
 	public ArrayList<Publisher> buscaEditora(String nome) {

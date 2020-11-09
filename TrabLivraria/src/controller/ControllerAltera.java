@@ -2,8 +2,10 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import entities.Author;
+import entities.Book;
 import entities.Publisher;
 import model.dao.DaoAlterar;
 import model.dao.DaoBusca;
@@ -29,8 +31,9 @@ public class ControllerAltera {
 	private void init() {
 		view.addSubmitBehavior(new submitBehavior());
 		view.addVerificaNomeBehavior(new VerificaNomeAuthor());
-		view.setAutoresEscolherApenasUm(daoBusca.buscaAutor("", ""));
+		view.setAutores(daoBusca.buscaAutor("", ""));
 		view.setEditoras(daoBusca.buscaEditora(""));
+		view.setLivros(daoBusca.buscaLivros(""));
 	}
 
 	class VerificaNomeAuthor implements ActionListener{
@@ -53,19 +56,20 @@ public class ControllerAltera {
 			Object tipo = view.getComboBoxSelected();
 			String msg = "";
 			if(tipo.equals("Livros")) {
-//				if(!txtISBN.getText().equals(" -   -     - ") && !txtTitulo.getText().equals("") 
-//						&& !txtBookPrice.getText().equals("  .  ")
-//						&& !buttonChooseAuthors.isVisible() && !buttonChoosePublishers.isVisible()) {
-//					String stringAutores = "";
-//					for(Author a : autoresEscolhidos) {
-//						stringAutores +=  "\n" + a.getFname() + " " + a.getName() ;
-//					}
-//					System.out.println(autoresEscolhidos);
-//					JOptionPane.showMessageDialog(null, "ISBN: " + txtISBN.getText() +
-//																	"\nTitulo: " + txtTitulo.getText() + 
-//																	"\nPreco: " + txtBookPrice.getText() +
-//																	"\nAutores: " + stringAutores + 
-//																	"\nEditora: " + editoraEscolhida);
+				String isbn = view.getISBN();
+				String title = view.getTitleBook();
+				double price = view.getPrice();
+				ArrayList<Author> autores = view.getAuthorsBook();
+				Publisher editora = view.getPublisherBook();
+				Book book = daoBusca.buscaLivroPorISBN(isbn);
+				
+				if(isbn.equals("") || title.equals("") || autores == null || editora == null ) {
+					new FrameMessage2();
+				} else {
+					daoAltera.alterarLivro(new Book(title, isbn, editora.getId(), price));
+					msg = "O livro " + "";
+				}
+				
 			} else if(tipo.equals("Autores")) {
 				Author author = view.getAuthor();
 				String nome = view.getFirstName();

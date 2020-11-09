@@ -13,6 +13,7 @@ import entities.Publisher;
 public interface DaoBusca {
 		
 	public ArrayList<Book> buscaLivros(String title);
+	public Book buscaLivroPorISBN(String isbn);
 	public ArrayList<Publisher> buscaEditora (String nome);
 	public ArrayList<Author> buscaAutor (String nome, String sobrenome);
 	public ArrayList<BooksANDAuthors> buscaAutorANDLivro(String titulo, String nomeAutor);
