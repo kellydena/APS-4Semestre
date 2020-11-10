@@ -1,0 +1,36 @@
+[33mcommit 3ad91756ddb63d6d07823b184016eeb9d1adefab[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Felipe Scherer <felipescherer25@gmail.com>
+Date:   Sun Nov 8 19:34:42 2020 -0300
+
+    View, Controller, Model Alterar pronto
+
+[33mcommit 64c38e981db8fe098d76754cfdc5d1b57f610ac3[m
+Merge: cf8506d cfd5028
+Author: Felipe Scherer <felipescherer25@gmail.com>
+Date:   Fri Nov 6 20:33:32 2020 -0300
+
+    Improving Altera
+
+[33mcommit cf8506d681e29ad8107f587804755719f93ca516[m
+Author: Felipe Scherer <felipescherer25@gmail.com>
+Date:   Fri Nov 6 09:35:22 2020 -0300
+
+    Improving Altera
+
+[33mcommit cfd50280d1035bff57b3bc25f7c3fbfaa96a43ca[m
+Author: kellydena <kelly.rdena@gmail.com>
+Date:   Fri Nov 6 09:14:12 2020 -0300
+
+    Classe Alterar finalizada e adição da entidade BooksANDAuthors
+
+[33mcommit 06532592058f809215cfb43bf35bba20294b598b[m
+Author: kellydena <kelly.rdena@gmail.com>
+Date:   Thu Nov 5 10:28:48 2020 -0300
+
+    teste kelly
+
+[33mcommit bade7c946b8497e48ea9d70599a8e31952657c8a[m
+Author: Felipe Scherer <felipescherer25@gmail.com>
+Date:   Thu Nov 5 10:15:45 2020 -0300
+
+    fisrt commit

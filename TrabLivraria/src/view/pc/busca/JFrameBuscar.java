@@ -19,10 +19,12 @@ import javax.swing.JTextField;
 
 import entities.Author;
 import entities.Book;
+import entities.BookAndPublisher;
 import entities.Publisher;
 import view.pc.FrameBase;
 import view.pc.busca.tables.JTableAutores;
 import view.pc.busca.tables.JTableEditoras;
+import view.pc.busca.tables.JTableLivros;
 
 public class JFrameBuscar extends FrameBase implements ViewBusca{
 
@@ -198,9 +200,8 @@ public class JFrameBuscar extends FrameBase implements ViewBusca{
 	}
 
 	@Override
-	public void mostrarListaLivro(ArrayList<Book> livros) {
-		// TODO Auto-generated method stub
-		
+	public void mostrarListaLivro(ArrayList<BookAndPublisher> livros) {
+		new JTableLivros(livros);
 	}
 	
 	

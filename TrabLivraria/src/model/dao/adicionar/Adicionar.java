@@ -20,7 +20,7 @@ public class Adicionar implements DaoAdicionar{
     private static final String URL = "jdbc:mysql://localhost:3306/Livraria?autoReconnect=true&useSSL=false";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     
-
+ 
 	@Override
 	public void adicionarLivro(Book livro) {
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){

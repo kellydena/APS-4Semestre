@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import entities.Author;
 import entities.Book;
+import entities.BookAndPublisher;
 import entities.Publisher;
 
 public interface ViewBusca{
@@ -14,9 +15,11 @@ public interface ViewBusca{
 	
 	public void mostrarListaEditora(ArrayList<Publisher> editoras);
 	public void mostrarListaAutor(ArrayList<Author> autores);
-	public void mostrarListaLivro(ArrayList<Book> livros);
+	public void mostrarListaLivro(ArrayList<BookAndPublisher> livros);
 	
 	public String getJRadioButton();
 	
 	public String getJTextFieldText();
+
+
 }

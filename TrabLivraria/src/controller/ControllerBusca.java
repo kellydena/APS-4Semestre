@@ -45,6 +45,9 @@ public class ControllerBusca {
 			} else if(texto.equals("Todos Autores")) {
 				//Usuario escolheu autores
 				view.mostrarListaAutor(dao.buscaAutor(jtxtText,jtxtText));
+			} else if(texto.equals("Todos livros")) {
+				//Usuario escolheu livros
+				view.mostrarListaLivro(dao.buscaLivroComEditora(jtxtText));
 			}
 			
 			
