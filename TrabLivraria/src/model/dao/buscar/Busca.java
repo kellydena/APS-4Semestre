@@ -96,6 +96,7 @@ public class Busca implements DaoBusca{
 		}  
 		return livro;
 	}
+<<<<<<< HEAD
 	
 	@Override
 	public ArrayList<BookAndPublisher> buscaLivroComEditora(String isbn) {
@@ -124,6 +125,8 @@ public class Busca implements DaoBusca{
 		}  
 		return livros;
 	}
+=======
+>>>>>>> 61b74d8cf2a82187e6035b42fc1102455932ac25
 
 	@Override
 	public ArrayList<Publisher> buscaEditora(String nome) {
