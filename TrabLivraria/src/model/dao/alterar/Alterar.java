@@ -25,7 +25,7 @@ public class Alterar implements DaoAlterar{
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
 			System.out.println("Conexão Feita");
 			
-			final String query = "INSERT Books VALUE (?,?,?,?)";
+			final String query = "UPDATE Books SET title = (?), isbn = (?), publisher_id = (?), price = (?)";
 			
 			PreparedStatement pstm = con.prepareStatement(query); 
 			

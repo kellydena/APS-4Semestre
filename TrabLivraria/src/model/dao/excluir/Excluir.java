@@ -9,7 +9,7 @@ import model.dao.DaoExcluir;
 
 public class Excluir implements DaoExcluir {
 	private static final String USER = "root";
-    private static final String PASS = "Br@sil2020";
+    private static final String PASS = "";
     private static final String URL = "jdbc:mysql://localhost:3306/Livraria?autoReconnect=true&useSSL=false";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
 
@@ -55,7 +55,7 @@ public class Excluir implements DaoExcluir {
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
 			System.out.println("Conexão Feita");
 			
-			final String query = "DELETE FROM Publishers WHERE  publisher_id = (?)";
+			final String query = "DELETE FROM Publishers WHERE publisher_id = (?)";
 			
 			PreparedStatement pstm = con.prepareStatement(query); 
 			
@@ -73,14 +73,14 @@ public class Excluir implements DaoExcluir {
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
 			System.out.println("Conexão Feita");
 			
-			final String query = "DELETE FROM Publishers WHERE  isbn_books_fk = (?) OR authorID_authors_fk = (?)";
+			final String query = "DELETE FROM BooksAuthors WHERE isbn = (?) OR author_id = (?)";
 			
 			PreparedStatement pstm = con.prepareStatement(query); 
 			
 			pstm.setString(1, isbn);
 			pstm.setInt(2, autorID);
 			
-			pstm.executeUpdate();			
+			pstm.execute();		
 			
 		}catch(SQLException e) {
 			e.printStackTrace();

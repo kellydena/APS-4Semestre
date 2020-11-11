@@ -98,15 +98,17 @@ public class Busca implements DaoBusca{
 	}
 	
 	@Override
-	public ArrayList<BookAndPublisher> buscaLivroComEditora(String isbn) {
+	public ArrayList<BookAndPublisher> buscaLivroComEditora(String isbnOrName) {
 		ArrayList<BookAndPublisher> livros = new ArrayList<>();
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
 			
-			final String query = "SELECT Books.Title, Books.isbn, Publishers.name, Books.price FROM Books INNER JOIN Publishers ON Books.publisher_id = Publishers.publisher_id WHERE Books.isbn LIKE(?);";
+			final String query = "SELECT Books.Title, Books.isbn, Publishers.name, Books.price FROM Books INNER JOIN Publishers ON "
+					+ "Books.publisher_id = Publishers.publisher_id WHERE Books.isbn LIKE(?) OR Books.title LIKE (?);";
 			
 			PreparedStatement pstm = con.prepareStatement(query); 
 			
-			pstm.setString(1, "%" + isbn + "%");
+			pstm.setString(1, "%" + isbnOrName + "%");
+			pstm.setString(2, "%" + isbnOrName + "%");
 			
 			ResultSet rs = pstm.executeQuery();
 			while(rs.next()) {

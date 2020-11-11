@@ -3,9 +3,12 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.xml.crypto.dsig.spec.ExcC14NParameterSpec;
+
 import model.dao.adicionar.Adicionar;
 import model.dao.alterar.Alterar;
 import model.dao.buscar.Busca;
+import model.dao.excluir.Excluir;
 import view.pc.View;
 import view.pc.altera.JFrameAlterar;
 import view.pc.busca.JFrameBuscar;
@@ -35,7 +38,7 @@ public class Controller {
 				new ControllerExclui(new JFrameExcluir());
 			}
 			else if(e.getSource() == view.getButtonAltera()) {
-				new ControllerAltera(new JFrameAlterar(), new Busca(), new Alterar());
+				new ControllerAltera(new JFrameAlterar(), new Busca(), new Alterar(), new Adicionar(), new Excluir());
 			}
 			else if(e.getSource() == view.getButtonInclui()) {
 				new ControllerInclui(new JFrameIncluir(), new Adicionar(), new Busca());

@@ -6,9 +6,13 @@ import java.util.ArrayList;
 
 import entities.Author;
 import entities.Book;
+import entities.BooksANDAuthors;
+import entities.BooksAuthors;
 import entities.Publisher;
+import model.dao.DaoAdicionar;
 import model.dao.DaoAlterar;
 import model.dao.DaoBusca;
+import model.dao.DaoExcluir;
 import view.pc.altera.ViewAltera;
 import view.pc.util.messages.FrameMessage2;
 import view.pc.util.messages.FrameReturnToUser;
@@ -19,15 +23,19 @@ public class ControllerAltera {
 	private ViewAltera view;
 	private DaoBusca daoBusca;
 	private DaoAlterar daoAltera;
+	private DaoAdicionar daoAdiciona;
+	private DaoExcluir daoExclui;
 	
 	
-	public ControllerAltera(ViewAltera viewAltera, DaoBusca daoBusca,DaoAlterar daoAltera) {
+	public ControllerAltera(ViewAltera viewAltera, DaoBusca daoBusca,DaoAlterar daoAltera, DaoAdicionar daoAdiciona, DaoExcluir daoExclui) {
 		this.view = viewAltera;
 		this.daoBusca = daoBusca;
 		this.daoAltera = daoAltera;
+		this.daoAdiciona = daoAdiciona;
+		this.daoExclui = daoExclui;
 		init();
 	}
-	
+
 	private void init() {
 		view.addSubmitBehavior(new submitBehavior());
 		view.addVerificaNomeBehavior(new VerificaNomeAuthor());
@@ -56,18 +64,30 @@ public class ControllerAltera {
 			Object tipo = view.getComboBoxSelected();
 			String msg = "";
 			if(tipo.equals("Livros")) {
-				String isbn = view.getISBN();
+				Book book = view.getBook();
 				String title = view.getTitleBook();
 				double price = view.getPrice();
 				ArrayList<Author> autores = view.getAuthorsBook();
 				Publisher editora = view.getPublisherBook();
-				Book book = daoBusca.buscaLivroPorISBN(isbn);
+				String isbn = book.getIsbn();
 				
-				if(isbn.equals("") || title.equals("") || autores == null || editora == null ) {
+				if(book == null || title.equals("") || autores == null || editora == null ) {
 					new FrameMessage2();
 				} else {
-					daoAltera.alterarLivro(new Book(title, isbn, editora.getId(), price));
-					msg = "O livro " + "";
+					daoExclui.excluirLivroAutor(0, book.getIsbn());
+					daoExclui.excluiLivro(book.getIsbn());
+					daoAdiciona.adicionarLivro(new Book(title, isbn, editora.getId(), price));
+					msg = "O livro " + book.getTitulo() + " de ISBN: " + book.getIsbn() +
+							"\nTeve titulo alterado para " + title + 
+							"\nPreco para " + price + 
+							"\nEditora para " + editora.getName() +
+							"\nAutores: ";		
+					int i = 0;
+					for(Author a : autores) {
+						i++;
+						daoAdiciona.adicionaBookAuthor(new BooksAuthors(book.getIsbn(), a.getId(), i));
+						msg = msg + "\n" + a.getFname() + " " + a.getName();
+					}
 				}
 				
 			} else if(tipo.equals("Autores")) {
@@ -94,9 +114,10 @@ public class ControllerAltera {
 							+ "Foi alterada para " + nome + " com url " + url;
 				}
 			}
-			
-		new FrameReturnToUser(msg);
-		view.disposeFrame();
+		if(!msg.equals("")) {	
+			new FrameReturnToUser(msg);
+			view.disposeFrame();
+		}
 	}
 	}
 	class AddSubmitBehavior implements ActionListener{

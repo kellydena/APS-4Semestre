@@ -26,7 +26,7 @@ public interface ViewAltera {
 	public String getEditoraName();
 	public String getUrl();
 	
-	public String getISBN();
+	public Book getBook();
 	public String getTitleBook();
 	public double getPrice();
 	public Publisher getPublisherBook();

@@ -179,7 +179,7 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						janelalistaEditorasParaLivro = new JFrameListEditoras(listaEditoras);
-						janelalistaEditorasParaLivro.addEscolheEditora(new EscolherEditora());
+						janelalistaEditorasParaLivro.addEscolheEditora(new EscolherEditoraParaLivro());
 						
 					}
 				});
@@ -274,7 +274,7 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				editoraEscolhida = janelalistaEditorasParaLivro.getEditora();
+				editoraEscolhidaParaLivro = janelalistaEditorasParaLivro.getEditora();
 				buttonChoosePublishers.setEnabled(false);
 			}
 		}
@@ -334,9 +334,6 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 		public String getUrl() {return txtUrlEditora.getText();}
 
 		@Override
-		public String getISBN() {return txtISBN.getText();}
-
-		@Override
 		public String getTitleBook() {return txtTitulo.getText();}
 		
 		@Override
@@ -352,7 +349,7 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 		}
 
 		@Override
-		public Publisher getPublisherBook() {return null;}
+		public Publisher getPublisherBook() {return editoraEscolhidaParaLivro;}
 
 		@Override
 		public ArrayList<Author> getAuthorsBook() {return autoresEscolhidosParaLivro;}
@@ -370,6 +367,9 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 
 		@Override
 		public void disposeFrame() {dispose();}
+
+		@Override
+		public Book getBook() {return livroEscolhido;}
 
 
 
