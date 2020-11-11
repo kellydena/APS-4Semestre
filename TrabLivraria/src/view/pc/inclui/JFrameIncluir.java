@@ -33,11 +33,14 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 	private static final long serialVersionUID = 1L;
 	
 	private JComboBox<String> cb;
+	
 	private JFormattedTextField txtISBN;
 	private JTextField txtTitulo;
 	private JTextField txtBookPrice;
 	private JButton buttonChooseAuthors;
 	private JButton buttonChoosePublishers;
+	private ArrayList<Author> autoresEscolhidos;
+	private Publisher editoraEscolhida;
 	
 	private JTextField txtNomeAutor;
 	private JTextField txtSobrenomeAutor;
@@ -45,14 +48,11 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 	private JTextField txtNomeEditora;
 	private JTextField txtUrlEditora;
 	
-	private Publisher editoraEscolhida;
-	
 	private ArrayList<Author> listaAutores;
 	private ArrayList<Publisher> listaEditoras;
 	
 	private JButton buttonSubmit;
-	private ArrayList<Author> autoresEscolhidos;
-	
+
 	private JFrameListEditoras JanelalistaEditoras;
 	private JFrameListAutores JanelalistaAutores;
 	
@@ -81,7 +81,6 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 		    
 		    public void addComponentToPane(Container pane) {
 		        
-		        //Put the JComboBox in a JPanel to get a nicer look.
 		        JPanel comboBoxPane = new JPanel(); //use FlowLayout
 		        String comboBoxItems[] = { AutoresPanel, LivrosPanel, EditorasPanel };
 		        cb = new JComboBox<String>(comboBoxItems);
@@ -89,10 +88,11 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 		        cb.addItemListener(this);
 		        comboBoxPane.add(cb);
 		        
-		        //Create the "cards".
 		        JPanel card1 = new JPanel();
 		        card1.setLayout(new FlowLayout(FlowLayout.TRAILING));
-
+		        
+/*----------------------------------------AUTORES----------------------------------------------------------------------*/
+		        
 	            card1.add(new JLabel("Nome do Autor: ", JLabel.TRAILING));
 	            txtNomeAutor = new JTextField(20);
 		        card1.add(txtNomeAutor);
@@ -100,7 +100,8 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 		        card1.add(new JLabel("Sobrenome do Autor: ", JLabel.TRAILING));
 		        txtSobrenomeAutor = new JTextField(20);
 		        card1.add(txtSobrenomeAutor);
-		        
+
+/*----------------------------------------LIVROS----------------------------------------------------------------------*/	
 		        
 		        JPanel card2 = new JPanel();
 		        card2.setLayout(new GridLayout(5,2));
@@ -108,8 +109,7 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 	            card2.add(new JLabel("ISBN: ", JLabel.TRAILING));
 		        txtISBN.setPreferredSize( new Dimension( 50, 30 ));
 		        card2.add(txtISBN);
-		        
-		        
+		        	        
 		        txtTitulo = new JTextField();
 	            card2.add(new JLabel("Titulo: ", JLabel.TRAILING));
 	            txtTitulo.setPreferredSize( new Dimension( 50, 30 ));
@@ -118,7 +118,6 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 		        txtBookPrice = new JTextField();
 		        txtBookPrice.addKeyListener(new VerificadorNumero());
 
-		        
 	            card2.add(new JLabel("Preço: ", JLabel.TRAILING));
 	            txtBookPrice.setPreferredSize( new Dimension( 50, 30 ));
 		        card2.add(txtBookPrice);
@@ -148,7 +147,8 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 				});
 	            card2.add(buttonChoosePublishers); 
 
-		        
+/*----------------------------------------EDITORAS----------------------------------------------------------------------*/
+	            
 		        JPanel card3 = new JPanel();
 		        card3.setLayout(new FlowLayout(FlowLayout.TRAILING));
 		        
@@ -160,7 +160,7 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 		        card3.add(new JLabel("URL da editora: ", JLabel.TRAILING));
 		        card3.add(txtUrlEditora);	        
 		        
-		        //Create the panel that contains the "cards".
+		        //Colocando os cards em um painel
 		        cards = new JPanel(new CardLayout());
 		        cards.add(card1, AutoresPanel);
 		        cards.add(card2, LivrosPanel);
@@ -173,12 +173,14 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 		        
 		    }
 		    
+		    //Metodo que troca os cards
 		    public void itemStateChanged(ItemEvent evt) {
 		        CardLayout cl = (CardLayout)(cards.getLayout());
 		        cl.show(cards, (String)evt.getItem());
 		    }
 		}
 		
+		//Mascara para deixar o ISBN padronizado
 	    protected MaskFormatter createFormatter(String s) {
 	        MaskFormatter formatter = null;
 	        try {
@@ -191,6 +193,7 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 	        return formatter;
 	    }
 	    
+	    //Metodo para deixar o preço padronizado
 	    private void verificaNumero(KeyEvent evt, JTextField txtField) {
 	    	 char c=evt.getKeyChar();
 	         if(!Character.isDigit(c) && c != '.'){
@@ -200,10 +203,8 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 	        	 evt.consume();
 	         }
 	    }
-
-	    
+   
 	    class VerificadorNumero implements KeyListener {
-
 			@Override
 			public void keyPressed(KeyEvent e) {}
 			@Override
@@ -214,17 +215,14 @@ public class JFrameIncluir extends FrameBase implements ViewInclui{
 	    
 	    
 		class EscolherEditora implements ActionListener{
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				editoraEscolhida = JanelalistaEditoras.getEditora();
 				buttonChoosePublishers.setEnabled(false);
-			}
-			
+			}			
 		}
 		
 		class EscolherAutores implements ActionListener{
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				autoresEscolhidos = JanelalistaAutores.getAutores();

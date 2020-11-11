@@ -13,11 +13,6 @@ public interface ViewAltera {
 	public void setEditoras(ArrayList<Publisher> p);
 	public void setLivros(ArrayList<Book> b);
 	
-	public void addSubmitBehavior(ActionListener al);
-	
-	public Object getComboBoxSelected();
-	
-	public void addVerificaNomeBehavior(ActionListener al);
 	public Author getAuthor();
 	public String getFirstName();
 	public String getLastName();
@@ -32,6 +27,8 @@ public interface ViewAltera {
 	public Publisher getPublisherBook();
 	public ArrayList<Author> getAuthorsBook();
 	
+	public void addSubmitBehavior(ActionListener al);
+	public Object getComboBoxSelected();
 	public void disposeFrame();
 	
 }

@@ -17,11 +17,9 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
 
 import entities.Author;
 import entities.Book;
@@ -36,8 +34,7 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 	private static final long serialVersionUID = 1L;
 	
 	private JComboBox<String> cb;
-	private JFormattedTextField txtISBN;
-	
+
 	private JButton bVerificaNomeLivro;
 	private JTextField txtTitulo;
 	private JTextField txtBookPrice;
@@ -48,7 +45,6 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 	private Book livroEscolhido;
 	
 	private JButton bVerificaNomeAutor;
-	private ArrayList<Author> listaAutoresAutores;
 	private JTextField txtNomeAutor;
 	private JTextField txtSobrenomeAutor;
 	private Author NomeAuthorEscolhido;
@@ -63,12 +59,9 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 	private ArrayList<Book> listaLivros;
 	
 	private JButton buttonSubmit;
-
 	
 	private JFrameListEditoras janelalistaEditorasParaLivro;
-	private JFrameListAutores janelalistaAutores;
-	
-	private ArrayList<Author> listaAutoresAutor;
+	private JFrameListAutores janelalistaAutoresParaLivro;
 	private JFrameListLivros janelalistaLivrosLivros;
 	private JFrameListEditoras janelalistaEditorasEditora;
 	private JFrameListSomenteUmAutor JanelalistaAutoresAutor;
@@ -86,7 +79,7 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 		
 		class PanelInclui extends JPanel implements ItemListener{
 			private static final long serialVersionUID = 1L;
-			JPanel cards; //a panel that uses CardLayout
+			JPanel cards; //Painel dos cards
 		    final static String AutoresPanel = "Autores";
 		    final static String EditorasPanel = "Editoras";
 		    final static String LivrosPanel = "Livros";  
@@ -99,7 +92,7 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 		    public void addComponentToPane(Container pane) {
 		        
 		        //Put the JComboBox in a JPanel to get a nicer look.
-		        JPanel comboBoxPane = new JPanel(); //use FlowLayout
+		        JPanel comboBoxPane = new JPanel(); //usar FlowLayout
 		        String comboBoxItems[] = { AutoresPanel, LivrosPanel, EditorasPanel };
 		        cb = new JComboBox<String>(comboBoxItems);
 		        cb.setEditable(false);
@@ -116,7 +109,7 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						JanelalistaAutoresAutor = new JFrameListSomenteUmAutor(listaAutores);
-						JanelalistaAutoresAutor.addEscolheAutor(new EscolherAutoresAutor());
+						JanelalistaAutoresAutor.addEscolheAutor(new EscolherAutor());
 					}
 				});
 		        card1.add(bVerificaNomeAutor);
@@ -132,9 +125,7 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 /*----------------------------------------LIVROS----------------------------------------------------------------------*/		        
 		        JPanel card2 = new JPanel();
 		        card2.setLayout(new GridLayout(5,2));
-		        //txtISBN = new JFormattedTextField(createFormatter("#-###-#####-#"));
 	            card2.add(new JLabel("Livro a ser alterado: ", JLabel.TRAILING));
-		        //txtISBN.setPreferredSize( new Dimension( 50, 30 ));
 	            bVerificaNomeLivro = new JButton("Escolher livro");
 	            bVerificaNomeLivro.addActionListener(new ActionListener() {
 					@Override
@@ -145,8 +136,7 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 				});
 	            
 		        card2.add(bVerificaNomeLivro);
-		        
-		        
+        
 		        txtTitulo = new JTextField();
 	            card2.add(new JLabel("Titulo: ", JLabel.TRAILING));
 	            txtTitulo.setPreferredSize( new Dimension( 50, 30 ));
@@ -155,7 +145,6 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 		        txtBookPrice = new JTextField();
 		        txtBookPrice.addKeyListener(new VerificadorNumero());
 
-		        
 	            card2.add(new JLabel("Preço: ", JLabel.TRAILING));
 	            txtBookPrice.setPreferredSize( new Dimension( 50, 30 ));
 		        card2.add(txtBookPrice);
@@ -166,8 +155,8 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 					
 					@Override
 					public void actionPerformed(ActionEvent e) {						
-						janelalistaAutores = new JFrameListAutores(listaAutores);
-						janelalistaAutores.addEscolheAutores(new EscolherAutores());
+						janelalistaAutoresParaLivro = new JFrameListAutores(listaAutores);
+						janelalistaAutoresParaLivro.addEscolheAutores(new EscolherAutoresParaLivro());
 					}
 				});
 	            card2.add(buttonChooseAuthors);
@@ -206,8 +195,8 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 		        txtUrlEditora = new JTextField(20);
 		        card3.add(new JLabel("URL da editora: ", JLabel.TRAILING));
 		        card3.add(txtUrlEditora);	        
-		        
-		        //Create the panel that contains the "cards".
+		       
+		        //Finalmente colocamos os cards no painel
 		        cards = new JPanel(new CardLayout());
 		        cards.add(card1, AutoresPanel);
 		        cards.add(card2, LivrosPanel);
@@ -220,24 +209,14 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 		        
 		    }
 		    
+		    //Metodo para trocar os cards
 		    public void itemStateChanged(ItemEvent evt) {
 		        CardLayout cl = (CardLayout)(cards.getLayout());
 		        cl.show(cards, (String)evt.getItem());
 		    }
 		}
-		
-	    protected MaskFormatter createFormatter(String s) {
-	        MaskFormatter formatter = null;
-	        try {
-	            formatter = new MaskFormatter(s);
-	            
-	        } catch (java.text.ParseException exc) {
-	            System.err.println("formatter is bad: " + exc.getMessage());
-	            System.exit(-1);
-	        }
-	        return formatter;
-	    }
 	    
+		//Metodo para tratar o campo de preco
 	    private void verificaNumero(KeyEvent evt, JTextField txtField) {
 	    	 char c=evt.getKeyChar();
 	         if(!Character.isDigit(c) && c != '.'){
@@ -258,20 +237,8 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 			@Override
 			public void keyTyped(KeyEvent e) {verificaNumero(e, txtBookPrice);}
 	    }
-	    
-	    
-		class EscolherEditora implements ActionListener{
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				editoraEscolhida = janelalistaEditorasEditora.getEditora();
-				bVerificaNomeEditora.setEnabled(false);
-			}
-			
-		}
 		
 		class EscolherEditoraParaLivro implements ActionListener{
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				editoraEscolhidaParaLivro = janelalistaEditorasParaLivro.getEditora();
@@ -279,11 +246,10 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 			}
 		}
 		
-		class EscolherAutores implements ActionListener{
-
+		class EscolherAutoresParaLivro implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				autoresEscolhidosParaLivro = janelalistaAutores.getAutores();
+				autoresEscolhidosParaLivro = janelalistaAutoresParaLivro.getAutores();
 				buttonChooseAuthors.setEnabled(false);
 			}
 		}
@@ -296,8 +262,7 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 			}
 		}
 		
-		class EscolherAutoresAutor implements ActionListener{
-
+		class EscolherAutor implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				NomeAuthorEscolhido = JanelalistaAutoresAutor.getAutor();
@@ -305,9 +270,17 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 			}
 		}
 		
-
+		class EscolherEditora implements ActionListener{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editoraEscolhida = janelalistaEditorasEditora.getEditora();
+				bVerificaNomeEditora.setEnabled(false);
+			}	
+		}
+		
+		//Configura uma lista com os valores iniciais de autores, editoras e livros
 		@Override
-		public void setAutores(ArrayList<Author> a) {listaAutores = a; listaAutoresAutores = a;}
+		public void setAutores(ArrayList<Author> a) {listaAutores = a;}
 
 		@Override
 		public void setEditoras(ArrayList<Publisher> p) {listaEditoras = p;}
@@ -343,7 +316,6 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 				price = Double.parseDouble(txtBookPrice.getText());
 			} catch(NumberFormatException  e){
 				price = 0.00;
-				
 			}
 			return price;
 		}
@@ -355,21 +327,18 @@ public class JFrameAlterar extends FrameBase implements ViewAltera{
 		public ArrayList<Author> getAuthorsBook() {return autoresEscolhidosParaLivro;}
 
 		@Override
-		public void addVerificaNomeBehavior(ActionListener al) {}
-
-
-		@Override
 		public Author getAuthor() {return NomeAuthorEscolhido;}
 
 		@Override
 		public Publisher getPublisher() {return editoraEscolhida;}
 		
-
+		@Override
+		public Book getBook() {return livroEscolhido;}
+		
 		@Override
 		public void disposeFrame() {dispose();}
 
-		@Override
-		public Book getBook() {return livroEscolhido;}
+
 
 
 
