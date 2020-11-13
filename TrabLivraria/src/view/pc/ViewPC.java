@@ -4,33 +4,20 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import entities.Publisher;
-import view.pc.altera.JFrameAlterar;
-import view.pc.busca.JFrameBuscar;
-import view.pc.exclui.JFrameExcluir;
-import view.pc.inclui.JFrameIncluir;
-
 public class ViewPC extends JFrame implements View{
-
+	private static final long serialVersionUID = 1L;
+	
 	private JButton buttonBusca;
 	private JButton buttonAltera;
 	private JButton buttonInclui;
 	private JButton buttonExclui;
-	
-	private JFrameExcluir janelaExclui;
-	private JFrameAlterar janelaAltera;
-	private JFrameIncluir janelaInclui;
-	private JFrameBuscar janelaBusca;
-	
 	
 	public ViewPC() {
 		super("APS Livraria");
@@ -49,7 +36,7 @@ public class ViewPC extends JFrame implements View{
 		panelLabels.add(labelWellcome);
 		labelWellcome.setFont(new Font("Serif", Font.PLAIN, 40));
 		
-		JLabel labelWellcome2 = new JLabel("O que deseja fazer com os livros?", JLabel.CENTER);
+		JLabel labelWellcome2 = new JLabel("O que deseja fazer?", JLabel.CENTER);
 		panelLabels.add(labelWellcome2);
 		labelWellcome2.setFont(new Font("Serif", Font.PLAIN, 20));
 		
@@ -60,7 +47,8 @@ public class ViewPC extends JFrame implements View{
 	}
 	
 	class PanelButtons extends JPanel{
-		
+		private static final long serialVersionUID = 1L;
+
 		public PanelButtons(){
 			setLayout(new GridLayout(2,2, 30, 30));
 			
@@ -84,24 +72,16 @@ public class ViewPC extends JFrame implements View{
 	}
 
 	@Override
-	public JButton getButtonBusca() {
-		return buttonBusca;
-	}
+	public JButton getButtonBusca() {return buttonBusca;}
 
 	@Override
-	public JButton getButtonAltera() {
-		return buttonAltera;
-	}
+	public JButton getButtonAltera() {return buttonAltera;}
 
 	@Override
-	public JButton getButtonInclui() {
-		return buttonInclui;
-	}
+	public JButton getButtonInclui() {return buttonInclui;}
 
 	@Override
-	public JButton getButtonExclui() {
-		return buttonExclui;
-	}
+	public JButton getButtonExclui() {return buttonExclui;}
 
 	@Override
 	public void EscolheJanelaBehavior(ActionListener al) {

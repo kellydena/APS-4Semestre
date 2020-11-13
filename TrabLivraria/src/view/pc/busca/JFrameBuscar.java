@@ -16,18 +16,22 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import entities.Author;
-import entities.Book;
-import entities.BookAndPublisher;
+import entities.AuthorWithBook;
 import entities.Publisher;
+import entities.PublisherWithBook;
 import view.pc.FrameBase;
+import view.pc.busca.tables.JTableAuthorWithBook;
 import view.pc.busca.tables.JTableAutores;
 import view.pc.busca.tables.JTableEditoras;
 import view.pc.busca.tables.JTableLivros;
+import view.pc.busca.tables.JTablePublisherWithBooks;
 
 public class JFrameBuscar extends FrameBase implements ViewBusca{
-
+	private static final long serialVersionUID = 1L;
+	
 	private JRadioButton bTodosLivros;
 	private JRadioButton bTodosAutores;
 	private JRadioButton bTodasEditoras;
@@ -57,6 +61,8 @@ public class JFrameBuscar extends FrameBase implements ViewBusca{
 	}
 	
 	class PanelPrincipal extends JPanel{
+		private static final long serialVersionUID = 1L;
+
 		public PanelPrincipal() {
 			setLayout(new BorderLayout());
 			
@@ -67,7 +73,8 @@ public class JFrameBuscar extends FrameBase implements ViewBusca{
 	}
 	
 	class PanelButtons extends JPanel{
-		
+		private static final long serialVersionUID = 1L;
+
 		public PanelButtons() {
 			ActionListener al = new JButtonBehavior();
 			bg = new ButtonGroup();
@@ -83,7 +90,7 @@ public class JFrameBuscar extends FrameBase implements ViewBusca{
 			bLivrosPorAutor = new JRadioButton("Livros por Autor");
 			bLivrosPorAutor.addActionListener(al);
 			bLivrosPorAutor.setActionCommand(pesquisaAutor);
-			bAutorPorEditora = new JRadioButton("Autores por Editora");
+			bAutorPorEditora = new JRadioButton("Livros por Editora");
 			bAutorPorEditora.addActionListener(al);
 			bAutorPorEditora.setActionCommand(pesquisaEditora);
 			bg.add(bTodasEditoras);
@@ -102,14 +109,13 @@ public class JFrameBuscar extends FrameBase implements ViewBusca{
 	}
 	
 	class PanelTxt extends JPanel {
-		
+		private static final long serialVersionUID = 1L;
+
 		public PanelTxt() {
-//			setBackground(Color.yellow);
 			
 			txtSubimit = new JTextFieldPersonalizado();
-			txtSubimit.setHorizontalAlignment(txtSubimit.CENTER);
+			txtSubimit.setHorizontalAlignment(SwingConstants.CENTER);
 			bSubmit = new JButton("Enviar");
-			//bSubmit.addActionListener(new ButtonSubmitBehavior());
 			
 			add(txtSubimit);
 			add(bSubmit);
@@ -117,7 +123,9 @@ public class JFrameBuscar extends FrameBase implements ViewBusca{
 	}
 	
 	class JTextFieldPersonalizado extends JTextField implements FocusListener{
-		 private boolean showingHint;
+		private static final long serialVersionUID = 1L;
+		
+		private boolean showingHint;
 		  
 		public JTextFieldPersonalizado() {
 			setText(NomeDaDica);
@@ -131,7 +139,7 @@ public class JFrameBuscar extends FrameBase implements ViewBusca{
 			if(this.getText().isEmpty()) {
 			      super.setText("");
 			      showingHint = false;
-			      }
+			}
 		}
 
 		@Override
@@ -159,23 +167,10 @@ public class JFrameBuscar extends FrameBase implements ViewBusca{
 		public void actionPerformed(ActionEvent e) {
 			
 			NomeDaDica = e.getActionCommand();
-			txtSubimit.focusLost(null);
-			
+			txtSubimit.focusLost(null);	
 		}
 		
 	}
-
-	@Override
-	public void addSubmitBehavior(ActionListener al) {
-		bSubmit.addActionListener(al);
-		
-	}
-
-	@Override
-	public void mostrarListaEditora(ArrayList<Publisher> editoras) {
-		new JTableEditoras(editoras);
-	}
-
 	@Override
 	public String getJRadioButton() {
 		for (Enumeration<AbstractButton> buttons = bg.getElements(); buttons.hasMoreElements();) {
@@ -187,22 +182,27 @@ public class JFrameBuscar extends FrameBase implements ViewBusca{
 	    }
 		return null;
 	}
+	
+	@Override
+	public void addSubmitBehavior(ActionListener al) {bSubmit.addActionListener(al);}
 
 	@Override
-	public String getJTextFieldText() {
-		return txtSubimit.getText();
-	}
+	public String getJTextFieldText() {return txtSubimit.getText();}
+	
+	@Override
+	public void mostrarListaEditora(ArrayList<Publisher> editoras) {new JTableEditoras(editoras);}
+	
+	@Override
+	public void mostrarListaAutor(ArrayList<Author> autores) {new JTableAutores(autores);}
 
 	@Override
-	public void mostrarListaAutor(ArrayList<Author> autores) {
-		new JTableAutores(autores);
-		
-	}
+	public void mostrarListaLivro(ArrayList<PublisherWithBook> livros) {new JTableLivros(livros);}
 
 	@Override
-	public void mostrarListaLivro(ArrayList<BookAndPublisher> livros) {
-		new JTableLivros(livros);
-	}
+	public void mostrarListaAuthorWithBook(ArrayList<AuthorWithBook> autorComLivro) {new JTableAuthorWithBook(autorComLivro);}
+
+	@Override
+	public void mostarListaEditoraComLivros(ArrayList<PublisherWithBook> editoraComLivro) {new JTablePublisherWithBooks(editoraComLivro);}
 	
 	
 

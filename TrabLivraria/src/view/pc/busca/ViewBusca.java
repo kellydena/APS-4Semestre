@@ -2,12 +2,11 @@ package view.pc.busca;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import entities.Author;
-import entities.Book;
-import entities.BookAndPublisher;
+import entities.AuthorWithBook;
 import entities.Publisher;
+import entities.PublisherWithBook;
 
 public interface ViewBusca{
 
@@ -15,7 +14,9 @@ public interface ViewBusca{
 	
 	public void mostrarListaEditora(ArrayList<Publisher> editoras);
 	public void mostrarListaAutor(ArrayList<Author> autores);
-	public void mostrarListaLivro(ArrayList<BookAndPublisher> livros);
+	public void mostrarListaLivro(ArrayList<PublisherWithBook> livros);
+	public void mostrarListaAuthorWithBook(ArrayList<AuthorWithBook> autorComLivro);
+	public void mostarListaEditoraComLivros(ArrayList<PublisherWithBook> editoraComLivro);
 	
 	public String getJRadioButton();
 	

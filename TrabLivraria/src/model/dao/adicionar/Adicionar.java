@@ -3,28 +3,33 @@ package model.dao.adicionar;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
+import java.util.Properties;
 
 import entities.Author;
 import entities.Book;
 import entities.BooksAuthors;
 import entities.Publisher;
 import model.dao.DaoAdicionar;
+import model.dao.DaoUtilConnection;
 
 public class Adicionar implements DaoAdicionar{
 	
-	private static final String USER = "root";
-    private static final String PASS = "";
-    private static final String URL = "jdbc:mysql://localhost:3306/Livraria?autoReconnect=true&useSSL=false";
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
+	private static String USER = "";
+    private static String PASS = "";
+    private static String URL = "";
     
- 
+    public Adicionar(){
+        Properties propri = DaoUtilConnection.readProperties("src/db.properties");
+        
+    	USER = propri.getProperty("USER");
+        PASS = propri.getProperty("PASSWORD");
+        URL = propri.getProperty("URL");
+	}
+    
 	@Override
 	public void adicionarLivro(Book livro) {
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
-			System.out.println("Conexão Feita");
 			
 			final String query = "INSERT Books VALUE (?,?,?,?)";
 			
@@ -47,8 +52,7 @@ public class Adicionar implements DaoAdicionar{
 	@Override
 	public void adicionaBookAuthor(BooksAuthors ba) {
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
-			System.out.println("Conexão Feita");
-			
+
 			final String query = "INSERT BooksAuthors VALUE (?,?,?)";
 			
 			PreparedStatement pstm = con.prepareStatement(query); 
@@ -67,7 +71,6 @@ public class Adicionar implements DaoAdicionar{
 	@Override
 	public void adicionarAutor(Author autor) {
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
-			System.out.println("Conexão Feita");
 			
 			final String query = "INSERT Authors VALUE (?,?,?)";
 			
@@ -88,7 +91,6 @@ public class Adicionar implements DaoAdicionar{
 	@Override
 	public void adicionarEditora(Publisher editora) {
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
-			System.out.println("Conexão Feita");
 			
 			final String query = "INSERT Publishers VALUE (?,?,?)";
 			

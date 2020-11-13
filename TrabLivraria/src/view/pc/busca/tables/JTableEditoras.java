@@ -1,9 +1,6 @@
 package view.pc.busca.tables;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -13,6 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import entities.Publisher;
 
 public class JTableEditoras extends JFrame{
+	private static final long serialVersionUID = 1L;
 	
 	JScrollPane panelScroll;
 	JTable table;
@@ -38,6 +36,8 @@ public class JTableEditoras extends JFrame{
 		
 		dtm = new DefaultTableModel(data, colunas);
 		table = new JTable(dtm) {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int cell) {return false;}
 		};

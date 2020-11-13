@@ -4,19 +4,27 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import model.dao.DaoExcluir;
+import model.dao.DaoUtilConnection;
 
 public class Excluir implements DaoExcluir {
-	private static final String USER = "root";
-    private static final String PASS = "";
-    private static final String URL = "jdbc:mysql://localhost:3306/Livraria?autoReconnect=true&useSSL=false";
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
-
+	private static String USER = "";
+    private static String PASS = "";
+    private static String URL = "";
+    
+    public Excluir() {
+        Properties propri = DaoUtilConnection.readProperties("src/db.properties");
+        
+    	USER = propri.getProperty("USER");
+        PASS = propri.getProperty("PASSWORD");
+        URL = propri.getProperty("URL");
+    }
+    
 	@Override
 	public void excluiLivro(String key) {
-		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
-			System.out.println("Conexão Feita");
+		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){		
 			
 			final String query = "DELETE FROM Books WHERE isbn = (?)";
 			
@@ -24,18 +32,16 @@ public class Excluir implements DaoExcluir {
 			
 			pstm.setString(1, key);
 			
-			pstm.executeUpdate();			
+			pstm.executeUpdate();
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
 	}		
 	
-
 	@Override
 	public void excluirAutor(int key) {
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
-			System.out.println("Conexão Feita");
 			
 			final String query = "DELETE FROM Authors WHERE author_id = (?)";
 			
@@ -43,7 +49,7 @@ public class Excluir implements DaoExcluir {
 			
 			pstm.setInt(1, key);
 			
-			pstm.executeUpdate();			
+			pstm.executeUpdate();
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -53,7 +59,6 @@ public class Excluir implements DaoExcluir {
 	@Override
 	public void excluirEditora(int key) {
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
-			System.out.println("Conexão Feita");
 			
 			final String query = "DELETE FROM Publishers WHERE publisher_id = (?)";
 			
@@ -71,7 +76,6 @@ public class Excluir implements DaoExcluir {
 	@Override
 	public void excluirLivroAutor(int autorID, String isbn) {
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
-			System.out.println("Conexão Feita");
 			
 			final String query = "DELETE FROM BooksAuthors WHERE isbn = (?) OR author_id = (?)";
 			

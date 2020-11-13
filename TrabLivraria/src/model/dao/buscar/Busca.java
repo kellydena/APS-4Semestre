@@ -7,41 +7,34 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 //import com.mysql.jdbc.Statement;
 
 import entities.Author;
 import entities.Book;
-import entities.BookAndPublisher;
-import entities.BooksANDAuthors;
+import entities.PublisherWithBook;
+import entities.AuthorWithBook;
 import entities.BooksAuthors;
 import entities.Publisher;
 import model.dao.DaoBusca;
+import model.dao.DaoUtilConnection;
 
 
 
 public class Busca implements DaoBusca{
 	
-	private static final String USER = "root";
-    private static final String PASS = "";
-    private static final String URL = "jdbc:mysql://localhost:3306/Livraria?autoReconnect=true&useSSL=false";
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
+	private static String USER = "";
+    private static String PASS = "";
+    private static String URL = "";
     
-    public static void fazConexao(){
-		Connection con= null;
-		try {
-		Class.forName(DRIVER);
-		con = DriverManager.getConnection(URL, USER, PASS); 
-		System.out.println("Conexão Feita");
-		
-		}catch(SQLException e) {
-			System.out.println("Conexão não foi Feita");
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    public Busca() {
+        Properties propri = DaoUtilConnection.readProperties("src/db.properties");
+        
+    	USER = propri.getProperty("USER");
+        PASS = propri.getProperty("PASSWORD");
+        URL = propri.getProperty("URL");
+    }
 
 	@Override
 	public ArrayList<Book> buscaLivros(String title) {
@@ -99,18 +92,33 @@ public class Busca implements DaoBusca{
 	}
 	
 	@Override
-	public ArrayList<BookAndPublisher> buscaLivroComEditora(String isbnOrName) {
-		ArrayList<BookAndPublisher> livros = new ArrayList<>();
+	public ArrayList<PublisherWithBook> buscaLivroComEditora(String isbnOrName,String editoraNome) {
+		ArrayList<PublisherWithBook> livros = new ArrayList<>();
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
 			
-			final String query = "SELECT Books.Title, Books.isbn, Publishers.name, Books.price FROM Books INNER JOIN Publishers ON "
-					+ "Books.publisher_id = Publishers.publisher_id WHERE Books.isbn LIKE(?) OR Books.title LIKE (?) ORDER BY books.title;";
+			PreparedStatement pstm;
 			
-			PreparedStatement pstm = con.prepareStatement(query); 
+			if(editoraNome.equals("")) { //Se nao passarmos a editora, significa que ele ira buscar pelo isbn ou o nome do livro
+			final String query = "SELECT Books.Title, Books.isbn, Publishers.name, Books.price FROM Books INNER JOIN Publishers ON "
+					+ "Books.publisher_id = Publishers.publisher_id"
+					+ " WHERE Books.isbn LIKE(?) OR Books.title LIKE (?)"
+					+ " ORDER BY books.title";
+			
+			pstm = con.prepareStatement(query); 
 			
 			pstm.setString(1, "%" + isbnOrName + "%");
 			pstm.setString(2, "%" + isbnOrName + "%");
-			
+
+			} else { //Caso o programador tenha passado a editora, fica implicito que quer pesquisar pelo nome dela
+				final String query = "SELECT Books.Title, Books.isbn, Publishers.name, Books.price FROM Books INNER JOIN Publishers ON "
+						+ "Books.publisher_id = Publishers.publisher_id"
+						+ " WHERE Publishers.name LIKE(?)"
+						+ " ORDER BY books.title";
+				
+				pstm = con.prepareStatement(query); 
+
+				pstm.setString(1, "%" + editoraNome + "%");
+			}
 			ResultSet rs = pstm.executeQuery();
 			while(rs.next()) {
 				String titulo = rs.getString("title");
@@ -118,7 +126,7 @@ public class Busca implements DaoBusca{
 				String editora = rs.getString("name");
         	    double preco = rs.getDouble("price");				      
         	    
-        	    BookAndPublisher livro = new BookAndPublisher(titulo, isbnLivro, editora, preco);
+        	    PublisherWithBook livro = new PublisherWithBook(titulo, isbnLivro, editora, preco);
 				livros.add(livro);
 			}
 			
@@ -188,30 +196,31 @@ public class Busca implements DaoBusca{
 	}
 
 	@Override
-	public ArrayList<BooksANDAuthors> buscaAutorANDLivro(String titulo, String nomeAutor) {
-		ArrayList<BooksANDAuthors> autorLivros = new ArrayList<>();
+	public ArrayList<AuthorWithBook> buscaAuthorWithBook(String titulo, String nomeAutor) {
+		ArrayList<AuthorWithBook> autorLivros = new ArrayList<>();
 
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
 			
-			final String query = "SELECT Books.title, Books.isbn, Authors.name from BooksAuthors inner join Books on BooksAuthors.isbn_books_fk = Books.isbn inner join Authors on BooksAuthors.authorID_authors_fk = Authors.author_id where Books.title like(?) or Authors.name like (?)";
+			final String query = "SELECT Books.title, Books.isbn, Authors.name, Authors.fname from BooksAuthors inner join Books"
+					+ " on BooksAuthors.isbn = Books.isbn "
+					+ "inner join Authors on BooksAuthors.author_id = Authors.author_id "
+					+ "where Books.title like(?) or LOWER(name) LIKE LOWER((?)) OR LOWER(fname) LIKE LOWER((?)) ORDER BY title, fname, name";
 			
 			PreparedStatement pstm = con.prepareStatement(query); 
 			
 			pstm.setString(1, "%" + titulo + "%");
 			pstm.setString(2, '%' + nomeAutor + '%');
+			pstm.setString(3, "%" + nomeAutor + "%");
 			
 			ResultSet rs = pstm.executeQuery();
 			while(rs.next()) {
 				String tituloLivro = rs.getString("title"); 
 				String isbn = rs.getString("isbn");
-				String nome=  rs.getString("name");				      
+				String nome=  rs.getString("fname") + " " + rs.getString("name");				      
+
+				AuthorWithBook autorLivro = new AuthorWithBook(tituloLivro, isbn, nome);
 				
-//<<<<<<< HEAD
-//				BooksAuthors autorLivro = new BooksAuthors("", 0, 0);
-//=======
-//				BooksANDAuthors autorLivro = new BooksANDAuthors(tituloLivro, isbn, nome);
-//>>>>>>> cfd50280d1035bff57b3bc25f7c3fbfaa96a43ca
-//				autorLivros.add(autorLivro);
+				autorLivros.add(autorLivro);		
 			}
 			
 		}catch(SQLException e) {

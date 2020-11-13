@@ -1,24 +1,19 @@
 package view.pc;
 
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class FrameBase extends JFrame{
+	private static final long serialVersionUID = 1L;
 	
 	public JPanel panelLabels;
 	
 	public FrameBase(String tipoDeOperacao) {
-		// TODO Auto-generated constructor stub
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));

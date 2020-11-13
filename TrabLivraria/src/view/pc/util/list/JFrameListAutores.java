@@ -2,7 +2,6 @@ package view.pc.util.list;
 
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,17 +20,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import entities.Author;
 
 public class JFrameListAutores extends JFrame  {
+	private static final long serialVersionUID = 1L;
+	
 	JComboBox<String> lista;
 	protected JPanel panelEscolhas;
 	
-	JComboBox cb;
-    private JList<Author> list;
+	JComboBox<String> cb;
+    private JList<String> list;
     private DefaultListModel<String> listModel;
  
     private static final String finishString = "Terminar";
@@ -66,7 +64,7 @@ public class JFrameListAutores extends JFrame  {
 		}
  
         //Create the list and put it in a scroll pane.
-        list = new JList(listModel);
+        list = new JList<String>(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         list.setVisibleRowCount(5);

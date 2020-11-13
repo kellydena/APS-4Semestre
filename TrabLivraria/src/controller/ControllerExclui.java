@@ -11,9 +11,9 @@ import entities.Publisher;
 import model.dao.DaoBusca;
 import model.dao.DaoExcluir;
 import view.pc.exclui.ViewExclui;
-import view.pc.util.list.JOptionFrameConfirmacao;
 import view.pc.util.messages.FrameMessage2;
 import view.pc.util.messages.FrameReturnToUser;
+import view.pc.util.messages.JOptionFrameConfirmacao;
 
 public class ControllerExclui {
 	

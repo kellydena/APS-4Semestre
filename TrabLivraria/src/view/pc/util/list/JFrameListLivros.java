@@ -19,12 +19,14 @@ import entities.Book;
 import entities.Publisher;
 
 public class JFrameListLivros extends JFrame{
+	private static final long serialVersionUID = 1L;
+	
 	JComboBox<String> lista;
 	JPanel panelEscolhas;
 	
-	JComboBox cb;
-    private JList list;
-    private DefaultListModel listModel;
+	JComboBox<String> cb;
+    private JList<String> list;
+    private DefaultListModel<String> listModel;
  
     private static final String finishString = "Terminar";
     private JButton buttonFinish;
@@ -43,7 +45,7 @@ public class JFrameListLivros extends JFrame{
 		//setLayout(new FlowLayout(FlowLayout.CENTER, 0, 50));
 		
 		this.livros = livros;
-		listModel = new DefaultListModel();
+		listModel = new DefaultListModel<String>();
 
 		
 		for(Book b : this.livros) {
@@ -51,7 +53,7 @@ public class JFrameListLivros extends JFrame{
 		}
  
         //Create the list and put it in a scroll pane.
-        list = new JList(listModel);
+        list = new JList<String>(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         //list.addListSelectionListener(this);

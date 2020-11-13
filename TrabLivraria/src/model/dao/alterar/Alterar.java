@@ -4,47 +4,30 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import entities.Author;
-import entities.Book;
-import entities.BooksAuthors;
 import entities.Publisher;
 import model.dao.DaoAlterar;
+import model.dao.DaoUtilConnection;
 
 public class Alterar implements DaoAlterar{
 	
-	private static final String USER = "root";
-    private static final String PASS = "";
-    private static final String URL = "jdbc:mysql://localhost:3306/Livraria?autoReconnect=true&useSSL=false";
-    private static final String DRIVER = "com.mysql.jdbc.Driver";{
-
-}
-
-	@Override
-	public void alterarLivro(Book livro) {
-		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
-			System.out.println("Conexão Feita");
-			
-			final String query = "UPDATE Books SET title = (?), isbn = (?), publisher_id = (?), price = (?)";
-			
-			PreparedStatement pstm = con.prepareStatement(query); 
-			
-			pstm.setString(1, livro.getTitulo());
-			pstm.setString(2, livro.getIsbn());
-			pstm.setInt(3, livro.getEditoraIdFk());
-			pstm.setDouble(4, livro.getPreco());
-			
-			pstm.executeUpdate();			
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
+	private static String USER = "";
+    private static String PASS = "";
+    private static String URL = "";
+    
+    public Alterar() {
+        Properties propri = DaoUtilConnection.readProperties("src/db.properties");
+        
+    	USER = propri.getProperty("USER");
+        PASS = propri.getProperty("PASSWORD");
+        URL = propri.getProperty("URL");
 	}
 
 	@Override
 	public void alterarAutor(Author autor) {
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
-			System.out.println("Conexão Feita");
 			
 			final String query = "UPDATE Authors SET name = (?), fname = (?) WHERE author_id = (?)";
 			
@@ -52,7 +35,6 @@ public class Alterar implements DaoAlterar{
 			pstm.setString(1, autor.getName());
 			pstm.setString(2, autor.getFname());
 			pstm.setInt(3, autor.getId());
-
 			
 			pstm.executeUpdate();			
 			
@@ -64,7 +46,6 @@ public class Alterar implements DaoAlterar{
 	@Override
 	public void alterarEditora(Publisher editora) {
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
-			System.out.println("Conexão Feita");
 			
 			final String query = "UPDATE Publishers SET name = (?), url = (?) WHERE publisher_id = (?)";
 			
@@ -81,22 +62,4 @@ public class Alterar implements DaoAlterar{
 		}
 	}
 
-	@Override
-	public void alterarBooksAuthors(BooksAuthors ba) {
-		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
-			System.out.println("Conexão Feita");
-			
-			final String query = "UPDATE BooksAuthors SET seq_no = (?) WHERE authorID_authors_fk = (?)";
-			
-			PreparedStatement pstm = con.prepareStatement(query); 
-			
-			pstm.setInt(1, ba.getSeqNo());
-			pstm.setInt(2, ba.getAuthorID());
-			
-			pstm.executeUpdate();			
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}		
-	}
 }

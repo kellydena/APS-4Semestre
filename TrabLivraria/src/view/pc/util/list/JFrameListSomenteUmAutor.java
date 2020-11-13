@@ -3,38 +3,32 @@ package view.pc.util.list;
 
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-
 
 import entities.Author;
-import entities.Publisher;
 
 public class JFrameListSomenteUmAutor extends JFrame  {
+	private static final long serialVersionUID = 1L;
+	
 	JComboBox<String> lista;
 	JPanel panelEscolhas;
 	
-	JComboBox cb;
-    private JList list;
+	JComboBox<String> cb;
+    private JList<String> list;
 	//JTable table;
-    private DefaultListModel listModel;
+    private DefaultListModel<String> listModel;
  
     private static final String finishString = "Terminar";
     private JButton buttonFinish;
@@ -53,7 +47,7 @@ public class JFrameListSomenteUmAutor extends JFrame  {
 		//setLayout(new FlowLayout(FlowLayout.CENTER, 0, 50));
 		
 		this.autores = autores;
-		listModel = new DefaultListModel();
+		listModel = new DefaultListModel<String>();
 
 		
 		for(Author a : this.autores) {
@@ -61,7 +55,7 @@ public class JFrameListSomenteUmAutor extends JFrame  {
 		}
  
         //Create the list and put it in a scroll pane.
-        list = new JList(listModel);
+        list = new JList<String>(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         //list.addListSelectionListener(this);

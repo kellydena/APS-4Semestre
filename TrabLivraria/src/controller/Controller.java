@@ -14,8 +14,6 @@ import view.pc.exclui.JFrameExcluir;
 import view.pc.inclui.JFrameIncluir;
 
 public class Controller {
-
-	//private DaoJDBC dao;
 	private View view;
 	
 	public Controller(View viewPC) {

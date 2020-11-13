@@ -1,4 +1,4 @@
-package view.pc.util.list;
+package view.pc.util.messages;
 
 import javax.swing.JOptionPane;
 

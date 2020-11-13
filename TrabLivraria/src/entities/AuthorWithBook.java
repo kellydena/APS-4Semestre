@@ -1,23 +1,23 @@
 package entities;
 
-public class BooksANDAuthors {
-	private String titullo;
+public class AuthorWithBook {
+	private String titulo;
 	private String isbnLivro;
 	private String autorNome;
 	
-	public BooksANDAuthors(String titullo, String isbnLivro, String autorNome) {
+	public AuthorWithBook(String titulo, String isbnLivro, String autorNome) {
 		super();
-		this.titullo = titullo;
+		this.titulo = titulo;
 		this.isbnLivro = isbnLivro;
 		this.autorNome = autorNome;
 	}
 
 	public String getTitullo() {
-		return titullo;
+		return titulo;
 	}
 
 	public void setTitullo(String titullo) {
-		this.titullo = titullo;
+		this.titulo = titullo;
 	}
 
 	public String getIsbnLivro() {
@@ -38,6 +38,6 @@ public class BooksANDAuthors {
 
 	@Override
 	public String toString() {
-		return "AutorLivro [titullo=" + titullo + ", isbnLivro=" + isbnLivro + ", autorNome=" + autorNome + "]";
+		return "AutorLivro [titullo=" + titulo + ", isbnLivro=" + isbnLivro + ", autorNome=" + autorNome + "]";
 	}
 }

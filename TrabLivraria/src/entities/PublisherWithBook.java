@@ -1,13 +1,13 @@
 package entities;
 
-public class BookAndPublisher {
+public class PublisherWithBook {
 	
 	private String titulo;
 	private String isbn;
 	private String editora;
 	private double preco;
 	
-	public BookAndPublisher(String titulo, String isbn, String editora, double preco2) {
+	public PublisherWithBook(String titulo, String isbn, String editora, double preco2) {
 		super();
 		this.titulo = titulo;
 		this.isbn = isbn;

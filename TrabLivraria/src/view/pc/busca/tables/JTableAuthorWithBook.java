@@ -7,29 +7,29 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import entities.Author;
+import entities.AuthorWithBook;
 
-public class JTableAutores extends JFrame{
+public class JTableAuthorWithBook extends JFrame{
 	private static final long serialVersionUID = 1L;
 	
 	JScrollPane panelScroll;
 	JTable table;
 	DefaultTableModel dtm;
+	Collection<AuthorWithBook> AutorComLivro;
 	
-	Collection<Author> autores;
-	
-	public JTableAutores(Collection<Author> autores) {
-		super("Autores");
+	public JTableAuthorWithBook(Collection<AuthorWithBook> AutorComLivro) {
+		super("Autores e seus livros ou Livros e seus autores");
 		
-		this.autores = autores;
+		this.AutorComLivro = AutorComLivro;
 		
-		Object[] colunas = new Object[] {"Primeiro Nome", "Ultimo Nome"};
+		Object[] colunas = new Object[] {"ISBN", "Nome do Livro", "Nome do(a) Autor(a)"};
 		
-		Object[][] data = new Object[autores.size()][2];
+		Object[][] data = new Object[AutorComLivro.size()][3];
 		int n = 0;
-		for(Author autor: autores) {
-			data[n][0] = autor.getFname();
-			data[n][1] = autor.getName();
+		for(AuthorWithBook ab: AutorComLivro) {
+			data[n][0] = ab.getIsbnLivro();
+			data[n][1] = ab.getTitullo();
+			data[n][2] = ab.getAutorNome();
 			n++;
 		}
 		
