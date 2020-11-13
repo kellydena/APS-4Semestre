@@ -3,8 +3,6 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.xml.crypto.dsig.spec.ExcC14NParameterSpec;
-
 import model.dao.adicionar.Adicionar;
 import model.dao.alterar.Alterar;
 import model.dao.buscar.Busca;
@@ -35,7 +33,7 @@ public class Controller {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == view.getButtonExclui()) {
-				new ControllerExclui(new JFrameExcluir());
+				new ControllerExclui(new JFrameExcluir(), new Busca(), new Excluir());
 			}
 			else if(e.getSource() == view.getButtonAltera()) {
 				new ControllerAltera(new JFrameAlterar(), new Busca(), new Alterar(), new Adicionar(), new Excluir());

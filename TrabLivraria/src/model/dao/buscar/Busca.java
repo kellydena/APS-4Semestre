@@ -14,6 +14,7 @@ import entities.Author;
 import entities.Book;
 import entities.BookAndPublisher;
 import entities.BooksANDAuthors;
+import entities.BooksAuthors;
 import entities.Publisher;
 import model.dao.DaoBusca;
 
@@ -48,7 +49,7 @@ public class Busca implements DaoBusca{
 
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
 			
-			final String query = "SELECT * FROM Books WHERE LOWER(title) LIKE LOWER(?)";
+			final String query = "SELECT * FROM Books WHERE LOWER(title) LIKE LOWER(?) ORDER BY title";
 			
 			PreparedStatement pstm = con.prepareStatement(query); 
 			
@@ -76,7 +77,7 @@ public class Busca implements DaoBusca{
 		Book livro = null;
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
 			
-			final String query = "SELECT * FROM Books WHERE isbn = (?)";
+			final String query = "SELECT * FROM Books WHERE isbn = (?) ORDER BY title";
 			
 			PreparedStatement pstm = con.prepareStatement(query); 
 			
@@ -103,7 +104,7 @@ public class Busca implements DaoBusca{
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
 			
 			final String query = "SELECT Books.Title, Books.isbn, Publishers.name, Books.price FROM Books INNER JOIN Publishers ON "
-					+ "Books.publisher_id = Publishers.publisher_id WHERE Books.isbn LIKE(?) OR Books.title LIKE (?);";
+					+ "Books.publisher_id = Publishers.publisher_id WHERE Books.isbn LIKE(?) OR Books.title LIKE (?) ORDER BY books.title;";
 			
 			PreparedStatement pstm = con.prepareStatement(query); 
 			
@@ -133,7 +134,7 @@ public class Busca implements DaoBusca{
 
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
 			
-			final String query = "SELECT * FROM Publishers WHERE LOWER(name) LIKE LOWER(?)";
+			final String query = "SELECT * FROM Publishers WHERE LOWER(name) LIKE LOWER(?) ORDER BY name";
 			
 			PreparedStatement pstm = con.prepareStatement(query); 
 			
@@ -163,7 +164,7 @@ public class Busca implements DaoBusca{
 
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
 			
-			final String query = "SELECT * FROM Authors WHERE LOWER(name) LIKE LOWER((?)) OR LOWER(fname) LIKE LOWER((?))";
+			final String query = "SELECT * FROM Authors WHERE LOWER(name) LIKE LOWER((?)) OR LOWER(fname) LIKE LOWER((?)) ORDER BY fname, name";
 			
 			PreparedStatement pstm = con.prepareStatement(query); 
 			
@@ -217,5 +218,62 @@ public class Busca implements DaoBusca{
 			e.printStackTrace();
 		}
 		return autorLivros;
+	}
+
+	@Override
+	public ArrayList<BooksAuthors> buscaLivrosAutores(int author_id) {
+		ArrayList<BooksAuthors> livrosAutores = new ArrayList<>();
+
+		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
+			
+			final String query = "SELECT * FROM BooksAuthors WHERE author_id = (?)";
+			
+			PreparedStatement pstm = con.prepareStatement(query); 
+			
+			pstm.setInt(1, author_id);
+			
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()) {
+				int autor_id = rs.getInt("author_id");
+		        String isbn = rs.getString("isbn");
+				int seq_number = rs.getInt("seq_no");
+				      	
+				BooksAuthors livroAutor = new BooksAuthors(isbn, autor_id, seq_number);
+				livrosAutores.add(livroAutor);
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return livrosAutores;
+	}
+
+	@Override
+	public ArrayList<Book> buscaLivroPorEditora(Publisher editora) {
+		ArrayList<Book> livros = new ArrayList<>();
+
+		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
+			
+			final String query = "SELECT * FROM Books WHERE publisher_id = (?);";
+			
+			PreparedStatement pstm = con.prepareStatement(query); 
+			
+			pstm.setInt(1, editora.getId());
+			
+			ResultSet rs = pstm.executeQuery();
+			while(rs.next()) {
+				String titulo = rs.getString("title");
+				String isbn = rs.getString("isbn"); 
+				int editoraIdFk = rs.getInt("publisher_id");
+        	    double preco = rs.getDouble("price");			      
+        	    
+        	    Book livro = new Book(titulo, isbn, editoraIdFk, preco);
+				livros.add(livro);
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return livros;
 	}
 }

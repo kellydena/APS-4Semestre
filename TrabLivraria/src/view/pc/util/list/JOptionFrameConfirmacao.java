@@ -5,14 +5,13 @@ import javax.swing.JOptionPane;
 public class JOptionFrameConfirmacao extends JOptionPane{
 	
 	private static final long serialVersionUID = 1L;
-	private String txt;
-	
+	private int input;
 	public JOptionFrameConfirmacao(String txt) {
-		this.txt = txt;
+		input = showConfirmDialog(null,txt,"Selecione uma opção...",JOptionPane.YES_NO_CANCEL_OPTION);
 	}
 
 
-	private int input = showConfirmDialog(null,txt,"Selecione uma opção...",JOptionPane.YES_NO_CANCEL_OPTION);
+	
 	
 	public int getInput() {
 		return input;
