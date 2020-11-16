@@ -11,17 +11,11 @@ public class Publisher {
 		this.url = url;
 	}
 	
-	public String getUrl() {
-		return url;
-	}
+	public String getUrl() {return url;}
 	
-	public int getId() {
-		return id;
-	}
+	public int getId() {return id;}
 	
-	public String getName() {
-		return name;
-	}
+	public String getName() {return name;}
 	
 	@Override
 	public String toString() {

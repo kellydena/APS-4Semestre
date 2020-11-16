@@ -12,29 +12,17 @@ public class AuthorWithBook {
 		this.autorNome = autorNome;
 	}
 
-	public String getTitullo() {
-		return titulo;
-	}
+	public String getTitullo() {return titulo;}
 
-	public void setTitullo(String titullo) {
-		this.titulo = titullo;
-	}
+	public void setTitullo(String titullo) {this.titulo = titullo;}
 
-	public String getIsbnLivro() {
-		return isbnLivro;
-	}
+	public String getIsbnLivro() {return isbnLivro;}
 
-	public void setIsbnLivro(String isbnLivro) {
-		this.isbnLivro = isbnLivro;
-	}
+	public void setIsbnLivro(String isbnLivro) {this.isbnLivro = isbnLivro;}
+	
+	public String getAutorNome() {return autorNome;}
 
-	public String getAutorNome() {
-		return autorNome;
-	}
-
-	public void setAutorNome(String autorNome) {
-		this.autorNome = autorNome;
-	}
+	public void setAutorNome(String autorNome) {this.autorNome = autorNome;}
 
 	@Override
 	public String toString() {

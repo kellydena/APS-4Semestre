@@ -13,15 +13,9 @@ public class BooksAuthors {
 		
 	}
 	
-	public String getISBN() {
-		return isbn;
-	}
+	public String getISBN() {return isbn;}
 	
-	public int getAuthorID() {
-		return autorID;
-	}
+	public int getAuthorID() {return autorID;}
 	
-	public int getSeqNo() {
-		return seqNo;
-	}
+	public int getSeqNo() {return seqNo;}
 }

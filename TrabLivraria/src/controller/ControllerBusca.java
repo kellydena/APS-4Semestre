@@ -54,12 +54,7 @@ public class ControllerBusca {
 			} else if(texto.equals("Livros por Editora")) {
 				//Usuario escolheu Livros por Editora
 				view.mostarListaEditoraComLivros(dao.buscaLivroComEditora("", jtxtText));
-			}
-			
-			
-			
-			
-			
+			}	
 		}
 		
 	}

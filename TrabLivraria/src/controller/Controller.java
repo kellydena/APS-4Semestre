@@ -17,17 +17,15 @@ public class Controller {
 	private View view;
 	
 	public Controller(View viewPC) {
-		this.view = viewPC;
-		
+		this.view = viewPC;	
 		init();
 	}
 	
 	private void init() {
-		this.view.EscolheJanelaBehavior(new EscolheJanela());;
+		this.view.EscolheJanelaBehavior(new EscolheJanela());
 	}
 	
 	class EscolheJanela implements ActionListener{
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == view.getButtonExclui()) {
@@ -40,11 +38,8 @@ public class Controller {
 				new ControllerInclui(new JFrameIncluir(), new Adicionar(), new Busca());
 			}
 			else if(e.getSource() == view.getButtonBusca()) {
-				new ControllerBusca(new JFrameBuscar(), new Busca());
-				
+				new ControllerBusca(new JFrameBuscar(), new Busca());			
 			}
-		}
-		
-	}
-	
+		}		
+	}	
 }

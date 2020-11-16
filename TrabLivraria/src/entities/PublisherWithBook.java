@@ -15,37 +15,21 @@ public class PublisherWithBook {
 		this.preco = preco2;
 	}
 
-	public String getTitulo() {
-		return titulo;
-	}
+	public String getTitulo() {return titulo;}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
+	public void setTitulo(String titulo) {this.titulo = titulo;}
 
-	public String getIsbn() {
-		return isbn;
-	}
+	public String getIsbn() {return isbn;}
+	
+	public void setIsbn(String isbn) {this.isbn = isbn;}
 
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
+	public String getEditora() {return editora;}
 
-	public String getEditora() {
-		return editora;
-	}
+	public void setEditora(String editoraIdFk) {this.editora = editoraIdFk;}
 
-	public void setEditora(String editoraIdFk) {
-		this.editora = editoraIdFk;
-	}
+	public double getPreco() {return preco;}
 
-	public double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(float preco) {
-		this.preco = preco;
-	}
+	public void setPreco(float preco) {this.preco = preco;}
 
 
 }

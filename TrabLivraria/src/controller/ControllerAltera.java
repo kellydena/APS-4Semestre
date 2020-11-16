@@ -23,7 +23,8 @@ public class ControllerAltera {
 	private DaoAdicionar daoAdiciona;
 	private DaoExcluir daoExclui;
 	
-	public ControllerAltera(ViewAltera viewAltera, DaoBusca daoBusca,DaoAlterar daoAltera, DaoAdicionar daoAdiciona, DaoExcluir daoExclui) {
+	public ControllerAltera(ViewAltera viewAltera, DaoBusca daoBusca,
+			DaoAlterar daoAltera, DaoAdicionar daoAdiciona, DaoExcluir daoExclui) {
 		this.view = viewAltera;
 		this.daoBusca = daoBusca;
 		this.daoAltera = daoAltera;
@@ -38,9 +39,8 @@ public class ControllerAltera {
 		view.setEditoras(daoBusca.buscaEditora(""));
 		view.setLivros(daoBusca.buscaLivros(""));
 	}
-
+	
 	class submitBehavior implements ActionListener{
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Object tipo = view.getComboBoxSelected();
@@ -69,10 +69,8 @@ public class ControllerAltera {
 						i++;
 						daoAdiciona.adicionaBookAuthor(new BooksAuthors(book.getIsbn(), a.getId(), i));
 						msg = msg + "\n" + a.getFname() + " " + a.getName();
-					}
-					
-				}
-				
+					}				
+				}				
 			} else if(tipo.equals("Autores")) {
 				Author author = view.getAuthor();
 				String nome = view.getFirstName();
@@ -97,12 +95,12 @@ public class ControllerAltera {
 							+ "Foi alterada para " + nome + " com url " + url;
 				}
 			}
-		//No final do alterar, caso exista mensagem, ou seja, deu tudo certo, iremos chamar uma janela com os dados alterados e em seguida um dispose
+		//No final do alterar, caso exista mensagem, ou seja, deu tudo certo, 
+		//iremos chamar uma janela com os dados alterados e em seguida um dispose
 		if(!msg.equals("")) {	
 			new FrameReturnToUser(msg);
 			view.disposeFrame();
 		}
 	}
 	}
-
 }

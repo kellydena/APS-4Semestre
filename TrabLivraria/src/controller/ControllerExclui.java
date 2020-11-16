@@ -60,7 +60,8 @@ public class ControllerExclui {
 				if(author == null) { //Caso o usuario nao tenha preenchido todos os campos
 					new FrameMessage2();
 				}else{
-					confirmacao = new JOptionFrameConfirmacao("Caso esse autor esteja relacionado a um livro, o livro também será excluido.\\nDeseja continuar?\"");
+					confirmacao = new JOptionFrameConfirmacao("Caso esse autor esteja relacionado a um livro, "
+							+ "o livro também será excluido.\nDeseja continuar?");
 					if(confirmacao.getInput() == 0) {
 						daoExclui.excluirLivroAutor(author.getId(), "");
 						ArrayList<BooksAuthors> livrosAutores = daoBusca.buscaLivrosAutores(author.getId());
@@ -77,7 +78,8 @@ public class ControllerExclui {
 				if(editora == null) {
 					new FrameMessage2();
 				} else {
-					confirmacao = new JOptionFrameConfirmacao("Caso essa editora esteja relacionado a um livro, ele também será excluido.\\nDeseja continuar?");
+					confirmacao = new JOptionFrameConfirmacao("Caso essa editora esteja relacionado a um livro,"
+							+ " ele também será excluido.\\nDeseja continuar?");
 					if(confirmacao.getInput() == 0) {
 						ArrayList<Book> livros = daoBusca.buscaLivroPorEditora(editora);
 						for(Book b : livros) {
@@ -90,15 +92,14 @@ public class ControllerExclui {
 					} else {view.disposeFrame();}	
 				}
 			}
-		//No final do excluir, caso exista mensagem, ou seja, deu tudo certo, iremos chamar uma janela com os dados excluidos e em seguida um dispose
+		//No final do excluir, caso exista mensagem, ou seja, deu tudo certo,
+		//iremos chamar uma janela com os dados excluidos e em seguida um dispose
 		if(!msg.equals("")) {	
 			new FrameReturnToUser(msg);
 			view.disposeFrame();
-		}	    
-			
-		}
-		
+		}	    	
 	}
+}
 	
 	
 	

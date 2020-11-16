@@ -40,13 +40,10 @@ public class Adicionar implements DaoAdicionar{
 			pstm.setInt(3, livro.getEditoraIdFk());
 			pstm.setDouble(4, livro.getPreco());
 			
-			pstm.executeUpdate();			
-			
+			pstm.executeUpdate();						
 		}catch(SQLException e) {
 			e.printStackTrace();
-		}
-		
-		
+		}			
 	}
 	
 	@Override
@@ -60,7 +57,6 @@ public class Adicionar implements DaoAdicionar{
 			pstm.setString(1, ba.getISBN());
 			pstm.setInt(2, ba.getAuthorID());
 			pstm.setInt(3, ba.getSeqNo());
-			
 			pstm.executeUpdate();			
 			
 		}catch(SQLException e) {
@@ -72,20 +68,17 @@ public class Adicionar implements DaoAdicionar{
 	public void adicionarAutor(Author autor) {
 		try(Connection con = DriverManager.getConnection(URL, USER, PASS)){
 			
-			final String query = "INSERT Authors VALUE (?,?,?)";
-			
+			final String query = "INSERT Authors VALUE (?,?,?)";		
 			PreparedStatement pstm = con.prepareStatement(query); 
 			
 			pstm.setInt(1, autor.getId());
 			pstm.setString(2, autor.getFname());
 			pstm.setString(3, autor.getName());
-			
-			pstm.executeUpdate();			
+			pstm.executeUpdate();
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
-		}
-		
+		}	
 	}
 
 	@Override
@@ -106,5 +99,4 @@ public class Adicionar implements DaoAdicionar{
 			e.printStackTrace();
 		}
 	}
-
 }
